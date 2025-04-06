@@ -1,5 +1,5 @@
 ## File Format Converter Tool
-A collection of high-level helper functions that utilize ffmpeg and other modules to convert image, audio, and video files into different formats. Also, it support to adjust the quality of the files to reduce their size.
+A collection of high-level helper functions that utilize ffmpeg and other modules to convert image, audio, and video files into different formats. Also, it can adjust the quality of the files to reduce their size.
 
 ## Download
 Directly download the code to use it. Donload as zip or using git:
