@@ -1,16 +1,15 @@
-# File Format Converter Tool
+## File Format Converter Tool
 A collection of high-level helper functions that utilize ffmpeg and other modules to convert image, audio, and video files into different formats. Also, it support to adjust the quality of the files to reduce their size.
----
 
-# Download
+## Download
 Directly download the code to use it. Donload as zip or using git:
 ```bash
-git clone 
+git clone https://github.com/ElenBOT/fileconvert.git
 ```
-[!Note]
-> user need to download `ffmpeg` first. Also modules that used in the codes.
+> [!Note]
+> user need to download `ffmpeg` first. Also modules that used in the code.
 
-# Usage Example
+## Usage Example
 
 ```python
 ## convert files with spcific ext inside a folder to another format
