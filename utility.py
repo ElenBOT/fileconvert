@@ -4,8 +4,6 @@ functions:
     convert_audio: Converts an audio file to another format and reduces the file size by adjusting the bitrate.
     convert_video: Converts a video file to another format and adjusts the resolution and bitrate.
     convert_image: Converts an image file to another format and compress the image quality.
-    convert_doc_to_txt" Converts a text-based .docx file to a plain .txt file.
-    convert_pdf_to_txt: Converts a text-based PDF file to a plain .txt file.
     get_file_size(filepath): Return the file size as a readable string like '12.56KB', '1.34MB', as well as number of bytes.
 """
 
@@ -161,68 +159,3 @@ def get_file_size(filepath):
     return f"{value:.2f} {units[i]}", size_bytes
 
 
-
-def convert_doc_to_txt(input_filepath, output_filepath, print_info=False):
-    """Converts a text-based .docx file to a plain .txt file.
-
-    Example usage:
-    >>> convert_doc_to_txt('input.docx', 'output.txt')
-
-    Args:
-        input_filepath (str): The path to the input .docx file.
-        output_filepath (str): The path to save the output .txt file.
-        print_info (bool): Print the converted filename, size, and size reduction.
-    """
-    from docx import Document
-
-    if not input_filepath.lower().endswith('.docx'):
-        raise ValueError("Only .docx files are supported (not .doc).")
-
-    # Load the document
-    doc = Document(input_filepath)
-    text = "\n".join(para.text for para in doc.paragraphs)
-
-    # Write to txt file
-    with open(output_filepath, 'w', encoding='utf-8') as f:
-        f.write(text)
-
-    if print_info:
-        size0_str, size0 = get_file_size(input_filepath)
-        size1_str, size1 = get_file_size(output_filepath)
-        print(
-            f'convert: "{os.path.basename(input_filepath)}" ({size0_str}) -> ' +
-            f'"{os.path.basename(output_filepath)}" ({size1_str}), {size1/size0*100:.2f}% of original size.'
-        )
-
-
-def convert_pdf_to_txt(input_filepath, output_filepath, print_info=False):
-    """Converts a text-based PDF file to a plain .txt file.
-
-    Example usage:
-    >>> convert_pdf_to_txt('input.pdf', 'output.txt')
-
-    Args:
-        input_filepath (str): The path to the input .pdf file.
-        output_filepath (str): The path to save the output .txt file.
-        print_info (bool): Print the converted filename, size, and size reduction.
-    """
-    import PyPDF2
-    if not input_filepath.lower().endswith('.pdf'):
-        raise ValueError("Only .pdf files are supported.")
-
-    with open(input_filepath, 'rb') as file:
-        reader = PyPDF2.PdfReader(file)
-        text = ''
-        for page in reader.pages:
-            text += page.extract_text() or ''  # handle None in case extract_text() returns None
-
-    with open(output_filepath, 'w', encoding='utf-8') as f:
-        f.write(text)
-
-    if print_info:
-        size0_str, size0 = get_file_size(input_filepath)
-        size1_str, size1 = get_file_size(output_filepath)
-        print(
-            f'convert: "{os.path.basename(input_filepath)}" ({size0_str}) -> ' +
-            f'"{os.path.basename(output_filepath)}" ({size1_str}), {size1/size0*100:.2f}% of original size.'
-        )
