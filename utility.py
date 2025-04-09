@@ -94,7 +94,8 @@ def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bit
             f'"{os.path.basename(output_filepath)}" ({size1_str}), {size1/size0*100:.2f}% of original size.'
         )
 
-
+from pillow_heif import register_heif_opener
+register_heif_opener()
 def convert_image(input_filepath, output_filepath, *, quality=85, suppres_warn=False, print_info=False):
     """Converts an image file to another format and compress the image quality.
 
@@ -117,7 +118,9 @@ def convert_image(input_filepath, output_filepath, *, quality=85, suppres_warn=F
     if not output_format:
         raise ValueError("Output file must have an extension to determine the format.")
     if output_format == 'jpg':
-       output_format = 'jpeg'
+        output_format = 'jpeg'
+    elif output_format in ['heic', 'heif']:
+        output_format = 'heif'
 
     # Convert and save the image, if the transprancy is not support, conver image to RGB first
     try:
@@ -158,7 +161,7 @@ def get_file_size(filepath):
     return f"{value:.2f} {units[i]}", size_bytes
 
 
-from docx import Document
+
 def convert_doc_to_txt(input_filepath, output_filepath, print_info=False):
     """Converts a text-based .docx file to a plain .txt file.
 
@@ -170,6 +173,8 @@ def convert_doc_to_txt(input_filepath, output_filepath, print_info=False):
         output_filepath (str): The path to save the output .txt file.
         print_info (bool): Print the converted filename, size, and size reduction.
     """
+    from docx import Document
+
     if not input_filepath.lower().endswith('.docx'):
         raise ValueError("Only .docx files are supported (not .doc).")
 
@@ -190,7 +195,6 @@ def convert_doc_to_txt(input_filepath, output_filepath, print_info=False):
         )
 
 
-import PyPDF2
 def convert_pdf_to_txt(input_filepath, output_filepath, print_info=False):
     """Converts a text-based PDF file to a plain .txt file.
 
@@ -202,6 +206,7 @@ def convert_pdf_to_txt(input_filepath, output_filepath, print_info=False):
         output_filepath (str): The path to save the output .txt file.
         print_info (bool): Print the converted filename, size, and size reduction.
     """
+    import PyPDF2
     if not input_filepath.lower().endswith('.pdf'):
         raise ValueError("Only .pdf files are supported.")
 
