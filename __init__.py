@@ -41,7 +41,7 @@ from .pathkit import (
     get_filepaths_under,
     replace_ext,
 )
-from .utility import (
+from .convert import (
     convert_audio,
     convert_video,
     convert_image,

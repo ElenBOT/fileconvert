@@ -11,8 +11,6 @@ __all__ = [
     'convert_audio',
     'convert_video',
     'convert_image',
-    'convert_doc_to_txt',
-    'convert_pdf_to_txt',
     'get_file_size',
 ]
 
@@ -23,7 +21,8 @@ import os
 
 def convert_audio(input_filepath, output_filepath, *, bitrate="160k", print_info=False):
     """Converts an audio file to another format and reduces the file size by adjusting the bitrate.
-
+    (Generate by AI)
+    
     Example usage:
     >>> convert_audio('input.mp3', 'output.mp3', bitrate='32k')    
 
@@ -53,7 +52,8 @@ def convert_audio(input_filepath, output_filepath, *, bitrate="160k", print_info
 
 def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bitrate="1000k", print_info=False):
     """Converts a video file to another format and adjusts the resolution and bitrate.
-
+    (Generate by AI)
+    
     Example usage:
     >>> convert_video('input.mp4', 'output.mp4', resolution='640x480', bitrate='256k')
 
@@ -96,7 +96,8 @@ from pillow_heif import register_heif_opener
 register_heif_opener()
 def convert_image(input_filepath, output_filepath, *, quality=85, suppres_warn=False, print_info=False):
     """Converts an image file to another format and compress the image quality.
-
+    (Generate by AI)
+    
     Example usage:
     >>> convert_image('input.png', 'output.jpg', format='JPEG', quality=90)
 
@@ -140,7 +141,8 @@ def convert_image(input_filepath, output_filepath, *, quality=85, suppres_warn=F
 
 def get_file_size(filepath):
     """Return the file size as a readable string like '12.56KB', '1.34MB', as well as number of bytes.
-    
+    (Generate by AI)
+
     Example usage:
     >>> get_readable_file_size("video.mkv")
     OUTPUT:
