@@ -14,6 +14,7 @@ __all__ = [
     'get_folderpath',
     'get_filepaths_under',
     'replace_ext',
+    'get_file_size',
 ]
 
 from tkinter import Tk, filedialog
@@ -146,3 +147,25 @@ def replace_ext(filepath, new_ext: str):
     
     # Join the root with the new extension
     return os.path.join(os.path.dirname(filepath), root.split(os.sep)[-1] + new_ext)
+
+
+def get_file_size(filepath):
+    """Return the file size as a readable string like '12.56KB', '1.34MB', as well as number of bytes.
+    (Generate by AI)
+
+    Example usage:
+    >>> get_readable_file_size("video.mkv")
+    OUTPUT:
+    | '284.88 MB', 298716659
+    """
+    size_bytes = os.path.getsize(filepath)
+    if size_bytes == 0:
+        return "0B"
+    
+    units = ["B", "KB", "MB", "GB", "TB", "PB"]
+    i = 0
+    value = size_bytes
+    while value >= 1024 and i < len(units) - 1:
+        value /= 1024.0
+        i += 1
+    return f"{value:.2f} {units[i]}", size_bytes

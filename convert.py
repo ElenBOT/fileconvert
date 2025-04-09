@@ -19,6 +19,9 @@ from PIL import Image
 import subprocess
 import os
 
+from pathkit import get_file_size
+
+
 def convert_audio(input_filepath, output_filepath, *, bitrate="160k", print_info=False):
     """Converts an audio file to another format and reduces the file size by adjusting the bitrate.
     (Generate by AI)
@@ -139,25 +142,6 @@ def convert_image(input_filepath, output_filepath, *, quality=85, suppres_warn=F
             f'"{os.path.basename(output_filepath)}" ({size1_str}), {size1/size0*100:.2f}% of original size.'
         )
 
-def get_file_size(filepath):
-    """Return the file size as a readable string like '12.56KB', '1.34MB', as well as number of bytes.
-    (Generate by AI)
 
-    Example usage:
-    >>> get_readable_file_size("video.mkv")
-    OUTPUT:
-    | '284.88 MB', 298716659
-    """
-    size_bytes = os.path.getsize(filepath)
-    if size_bytes == 0:
-        return "0B"
-    
-    units = ["B", "KB", "MB", "GB", "TB", "PB"]
-    i = 0
-    value = size_bytes
-    while value >= 1024 and i < len(units) - 1:
-        value /= 1024.0
-        i += 1
-    return f"{value:.2f} {units[i]}", size_bytes
 
 
