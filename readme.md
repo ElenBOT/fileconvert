@@ -1,5 +1,5 @@
 ## File Format Converter Tool
-A collection of high-level helper functions that utilize ffmpeg and other modules to convert image, audio, and video files into different formats. Also, it can adjust the quality of the files to reduce their size.
+A collection of high-level helper functions that utilize ffmpeg, exiftool and other modules to convert image, audio, and video files into different formats and reduce the quality as well as file size.
 
 ## Download
 Directly download the code to use it. Donload as zip or using git:
@@ -7,7 +7,8 @@ Directly download the code to use it. Donload as zip or using git:
 git clone https://github.com/ElenBOT/fileconvert.git
 ```
 > [!Note]
-> user need to download `ffmpeg` first. Also modules that used in the code.
+> User need to download `ffmpeg` and python modules that used in the code first.
+> While `exiftool` is optioanl, it deal with information in picture like GPS location and camera parameters.
 
 ## Usage Example
 
