@@ -15,7 +15,7 @@ __all__ = [
 ]
 
 from pydub import AudioSegment
-from PIL import Image
+from PIL import Image, ImageOps
 import subprocess
 import os
 
@@ -53,7 +53,7 @@ def convert_audio(input_filepath, output_filepath, *, bitrate="160k", print_info
     audio.export(output_filepath, format=output_format, bitrate=bitrate)
 
     if print_info:
-        print_conversion_info()
+        print_conversion_info(input_filepath, output_filepath)
 
 def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bitrate="1000k", print_info=False):
     """Converts a video file to another format and adjusts the resolution and bitrate.
@@ -90,7 +90,7 @@ def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bit
     subprocess.run(command, check=True)
 
     if print_info:
-        print_conversion_info()
+        print_conversion_info(input_filepath, output_filepath)
 
 
 
@@ -111,6 +111,10 @@ def convert_image(input_filepath, output_filepath, *,
     """
     image = Image.open(input_filepath)
 
+    # Handle orientation based on EXIF
+    image = Image.open(input_filepath)
+    image = ImageOps.exif_transpose(image)  # Safe transpose if needed
+
     output_format = os.path.splitext(output_filepath)[1][1:].lower()
     if not output_format:
         raise ValueError("Output file must have an extension.")
@@ -126,13 +130,14 @@ def convert_image(input_filepath, output_filepath, *,
             image = image.convert('RGB')
             image.save(output_filepath, format=output_format, quality=quality)
 
-    # Use exiftool to copy metadata
+    # Use exiftool to copy metadata (but exclude orientation if we've already applied it)
     if keep_metadata:
         try:
             subprocess.run([
                 'exiftool',
                 '-overwrite_original',
                 f'-TagsFromFile={input_filepath}',
+                '-Orientation=',  # Remove Orientation tag
                 output_filepath
             ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except FileNotFoundError:
@@ -143,4 +148,4 @@ def convert_image(input_filepath, output_filepath, *,
                 print("ExifTool failed to copy metadata.")
 
     if print_info:
-        print_conversion_info()
+        print_conversion_info(input_filepath, output_filepath)
