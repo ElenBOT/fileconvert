@@ -112,7 +112,6 @@ def convert_image(input_filepath, output_filepath, *,
     image = Image.open(input_filepath)
 
     # Handle orientation based on EXIF
-    image = Image.open(input_filepath)
     image = ImageOps.exif_transpose(image)  # Safe transpose if needed
 
     output_format = os.path.splitext(output_filepath)[1][1:].lower()
