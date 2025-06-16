@@ -55,9 +55,8 @@ def convert_audio(input_filepath, output_filepath, *, bitrate="160k", print_info
     if print_info:
         print_conversion_info(input_filepath, output_filepath)
 
-def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bitrate="1000k", print_info=False):
-    """Converts a video file to another format and adjusts the resolution and bitrate.
-    (Generate by AI)
+def convert_video(input_filepath, output_filepath, *, resolution=None, bitrate="1000k", print_info=False):
+    """Converts a video file to another format and optionally adjusts the resolution and bitrate.
     
     Example usage:
     >>> convert_video('input.mp4', 'output.mp4', resolution='640x480', bitrate='256k')
@@ -65,28 +64,29 @@ def convert_video(input_filepath, output_filepath, *, resolution="1280x720", bit
     Args:
         input_filepath (str): The path to the input video file.
         output_filepath (str): The path to save the output video file.
-        resolution (str): The desired resolution high: 1920x1080, mid: 1280x720, low: 640x480.
-        bitrate (str): The bitrate of the output video, high: 3000k, mid: 1000k, low: 500k.
-        print_info (bool): print the converted filename, size, and size redunction.
+        resolution (str or None): The desired resolution (e.g., "1920x1080"). If None, keep original.
+        bitrate (str): The bitrate of the output video, e.g., "3000k", "1000k", "500k".
+        print_info (bool): Print the converted filename, size, and size reduction.
     """
 
-
     # Get output format from the output file path
-    output_format = os.path.splitext(output_filepath)[1][1:].lower()  # e.g., ".MP4" -> "mp4"
+    output_format = os.path.splitext(output_filepath)[1][1:].lower()
     if not output_format:
         raise ValueError("Output file must have an extension to determine the format.")
-    
+
     # Construct the ffmpeg command
     command = [
         "ffmpeg",
-        "-y",  # force overwrite
+        "-y",
         "-i", input_filepath,
-        "-s", resolution,
-        "-b:v", bitrate,
-        output_filepath
     ]
-    
-    # Run the command to convert the video
+
+    if resolution:
+        command += ["-s", resolution]
+
+    command += ["-b:v", bitrate, output_filepath]
+
+    # Run the command
     subprocess.run(command, check=True)
 
     if print_info:

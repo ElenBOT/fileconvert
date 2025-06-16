@@ -22,7 +22,7 @@ import ctypes
 import os
 from typing import Callable
 
-def get_filepath(ext: str = None, title='Select a file path', savefile=False):
+def get_filepath(ext: str = None, title='Select a file path', initialdir: str = None, savefile=False):
     """Pop up a dialog to browse a file path (or save path) then return it.
 
     Example usage:
@@ -53,10 +53,10 @@ def get_filepath(ext: str = None, title='Select a file path', savefile=False):
     else:
         filetypes = [('All Files', '*.*')]
 
-    filepath = dialog(filetypes=filetypes, title=title)
+    filepath = dialog(filetypes=filetypes, title=title, initialdir=initialdir)
     return filepath
 
-def get_filepaths(ext: str = None, title='Select file(s)'):
+def get_filepaths(ext: str = None, title='Select file(s)', initialdir: str = None):
     """Pop up a dialog to browse and select multiple files.
 
     Example usage:
@@ -81,11 +81,11 @@ def get_filepaths(ext: str = None, title='Select file(s)'):
     else:
         filetypes = [('All Files', '*.*')]
 
-    filepaths = filedialog.askopenfilenames(filetypes=filetypes, title=title)
+    filepaths = filedialog.askopenfilenames(filetypes=filetypes, title=title, initialdir=initialdir)
     return list(filepaths)
 
 
-def get_folderpath(title='Select a folder'):
+def get_folderpath(title='Select a folder', initialdir: str = None,):
     """Pop up a dialog to browse and select a folder.
 
     Example usage:
@@ -102,7 +102,7 @@ def get_folderpath(title='Select a folder'):
     root.withdraw()
     root.attributes("-topmost", True)
 
-    folderpath = filedialog.askdirectory(title=title)
+    folderpath = filedialog.askdirectory(title=title, initialdir=initialdir)
     return folderpath
 
 def get_filepaths_under(folderpath: str, filter: Callable[[str], bool] = None):

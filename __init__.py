@@ -24,7 +24,7 @@ Example usage:
 >>> path1 = get_filepath(savefile=True)
 >>> convert_image(path0, path1, quality=40, print_info=True)
 >>> #convert_audio(path0, path1, bitrate='32k', print_info=True)
->>> #convert_video(path0, path1, resolution='640x480', bitrate='256k', print_info=True)
+>>> #convert_video(path0, path1, bitrate='256k', print_info=True)
 >>> 
 >>> ## convert files with spcific ext inside a folder to another format
 >>> folder_path = get_folderpath()
@@ -32,6 +32,13 @@ Example usage:
 >>> for input_path in audio_fp:
 >>>     output_path = replace_ext(input_path, '.mp3')
 >>>     convert_audio(input_path, output_path, bitrate='32k', print_info=True)
+>>>
+>>> ## Extract txt for a doc or pdf file
+>>> filepath = get_filepath('.docx')
+>>> text = extract_text_from_doc(filepath, output_filepath='')
+>>> all_images = extract_images_from_doc(filepath)
+>>> # text = extract_text_from_pdf(filepath, output_filepath='')
+>>> # all_images = extract_images_from_pdf(filepath)
 """
 
 from .pathkit import (
@@ -46,4 +53,11 @@ from .convert import (
     convert_video,
     convert_image,
     get_file_size,
+)
+
+from .extract import (
+    extract_text_from_doc,
+    extract_text_from_pdf,
+    extract_images_from_doc,
+    extract_images_from_pdf,
 )
